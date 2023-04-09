@@ -22,4 +22,5 @@ build() {
 package() {
     cd $startdir
     install -Dm755 ./build/desktopper "$pkgdir/usr/bin/desktopper"
+    install -Dm755 desktopper.desktop "$pkgdir/usr/share/applications/desktopper.desktop"
 }

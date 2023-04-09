@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Desktopper
+Comment=An application to create .desktop files.
+Exec=desktopper
+Terminal=false
+Icon=
+Type=Application
+Categories=Utility;
