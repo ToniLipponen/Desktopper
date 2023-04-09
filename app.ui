@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0"/>
+    <requires lib="Adw" version="1.0"/>
+    <object class="AdwApplicationWindow" id="MainWindow">
+        <property name="default-width">600</property>
+        <property name="default-height">500</property>
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="spacing">5</property>
+                <property name="vexpand">True</property>
+                <property name="hexpand">True</property>
+                <child>
+                    <object class="GtkHeaderBar" id="header_bar">
+                        <child>
+                           <object class="GtkButton" id="open-file-button">
+                               <property name="icon-name">document-open-symbolic</property>
+                           </object>
+                        </child>
+                        <child>
+                            <object class="GtkSeparator">
+
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkButton" id="new-file-button">
+                                <property name="icon-name">document-new-symbolic</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+
+                <child>
+                    <object class="AdwPreferencesGroup">
+                        <property name="halign">GTK_ALIGN_CENTER</property>
+                        <property name="valign">GTK_ALIGN_CENTER</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="width-request">500</property>
+
+                        <child>
+                            <object class="AdwEntryRow" id="name-input">
+                                <property name="title">Application name</property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="AdwEntryRow" id="command-input">
+                                <property name="title">Command</property>
+                                <child>
+                                    <object class="GtkButton" id="open-exec-button">
+                                        <property name="icon-name">document-open-symbolic</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="AdwEntryRow" id="icon-input">
+                                <property name="title">Icon</property>
+                                <child>
+                                    <object class="GtkButton" id="open-icon-button">
+                                        <property name="icon-name">document-open-symbolic</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="AdwExpanderRow">
+                                <property name="title">Categories</property>
+
+                                <child>
+                                    <object class="GtkCheckButton" id="audio-check">
+                                        <property name="label">Audio</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkCheckButton" id="graphics-check">
+                                        <property name="label">Graphics</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkCheckButton" id="game-check">
+                                        <property name="label">Games</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkCheckButton" id="network-check">
+                                        <property name="label">Network</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkCheckButton" id="utility-check">
+                                        <property name="label">Utility</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkCheckButton" id="office-check">
+                                        <property name="label">Office</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkCheckButton" id="settings-check">
+                                        <property name="label">Settings</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="AdwEntryRow" id="custom-categories">
+                                        <property name="title">Custom</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="AdwEntryRow" id="comment-input">
+                                <property name="title">Comment</property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkCheckButton" id="terminal-check">
+                                <property name="label">Run in terminal</property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkCheckButton" id="desktop-check">
+                                <property name="active">True</property>
+                                <property name="label">Add to desktop</property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkCheckButton" id="menu-check">
+                                <property name="active">False</property>
+                                <property name="active">True</property>
+                                <property name="label">Add to menu</property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkButton" id="create-button">
+                                <property name="label" translatable="yes">Create</property>
+                            </object>
+                        </child>
+                    </object>
+
+                </child>
+            </object>
+        </child>
+    </object>
+</interface>
