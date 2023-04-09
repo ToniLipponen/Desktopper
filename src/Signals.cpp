@@ -22,8 +22,8 @@ static void OnExecutableSelect(GObject* src, GAsyncResult* result, gpointer data
         return;
     }
 
-    auto input = GTK_EDITABLE(app->widgets.at("command-input"));
-    gtk_editable_set_text(input, g_file_get_parse_name(file));
+    auto filename = g_file_get_parse_name(file);
+    app->SetEditableText("command-input", filename);
 }
 
 static void OnIconSelect(GObject* src, GAsyncResult* result, gpointer data)
@@ -39,9 +39,7 @@ static void OnIconSelect(GObject* src, GAsyncResult* result, gpointer data)
     }
 
     auto filename = g_file_get_parse_name(file);
-    auto input = GTK_EDITABLE(app->widgets.at("icon-input"));
-
-    gtk_editable_set_text(input, filename);
+    app->SetEditableText("icon-input", filename);
 }
 
 static void OnEntrySelect(GObject* src, GAsyncResult* result, gpointer data)
@@ -57,8 +55,6 @@ static void OnEntrySelect(GObject* src, GAsyncResult* result, gpointer data)
     }
 
     auto filename = g_file_get_parse_name(file);
-    puts(filename);
-
     app->LoadEntry(filename);
 }
 

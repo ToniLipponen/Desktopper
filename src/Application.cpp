@@ -26,20 +26,18 @@ gint Application::Run(int argc, char** argv)
 
 void Application::Clear()
 {
-    SetEditableText("name-input",       "");
-    SetEditableText("command-input",    "");
-    SetEditableText("comment-input",    "");
-    SetEditableText("icon-input",       "");
+    for(const auto& [id, widget] : widgets)
+    {
+        auto name = gtk_widget_get_name(widget);
 
-    SetChecked("terminal-check",    false);
-    SetChecked("menu-check",        true);
-    SetChecked("audio-check",       false);
-    SetChecked("graphics-check",    false);
-    SetChecked("game-check",        false);
-    SetChecked("network-check",     false);
-    SetChecked("utility-check",     false);
-    SetChecked("office-check",      false);
-    SetChecked("settings-check",    false);
+        if(strcmp(name, "AdwEntryRow") == 0)
+            SetEditableText(id, "");
+        else if(strcmp(name, "GtkCheckButton") == 0)
+            SetChecked(id, false);
+    }
+
+    SetChecked("menu-check", true);
+    SetChecked("desktop-check", true);
 }
 
 std::vector<std::string> Application::GetCategories()
@@ -106,65 +104,30 @@ void Application::LoadEntry(const std::string& path)
     SetChecked("settings-check",    std::find(beg, end, "Settings"  ) != end);
 }
 
+static void AppendToMap(gpointer object, gpointer userData)
+{
+    auto app = (Application*)userData;
+    app->widgets[gtk_buildable_get_buildable_id(GTK_BUILDABLE(object))] = GTK_WIDGET(object);
+}
+
 void Application::CreateWidgets()
 {
     GtkBuilder* builder = gtk_builder_new_from_string(gUIData, gUISize);
     //GtkBuilder* builder = gtk_builder_new_from_file("../app.ui");
-    GObject* window = gtk_builder_get_object(builder, "MainWindow");
 
-    gtk_window_set_title(GTK_WINDOW(window), "Desktopper");
-    gtk_window_set_application(GTK_WINDOW(window), m_app);
+    auto objects = gtk_builder_get_objects(builder);
+    g_slist_foreach(objects, AppendToMap, this);
+    g_slist_free(objects);
+    g_object_unref(builder);
+
+    auto window = GTK_WINDOW(widgets.at("MainWindow"));
+    gtk_window_set_title(window, "Desktopper");
+    gtk_window_set_application(window, m_app);
     gtk_widget_set_visible(GTK_WIDGET(window), true);
 
-    auto GetWidget = [&](const char* name)
-    {
-        widgets[name] = GTK_WIDGET(gtk_builder_get_object(builder, name));
-    };
-
-    auto GetWidgets = [&](const std::vector<std::string>& names)
-    {
-        for(auto& name : names)
-            GetWidget(name.c_str());
-
-        g_object_unref(builder);
-    };
-
-    GetWidgets({
-        "name-input",
-        "icon-input",
-        "command-input",
-        "comment-input",
-        "create-button",
-        "open-file-button",
-        "new-file-button",
-        "desktop-check",
-        "terminal-check",
-        "menu-check",
-        "open-exec-button",
-        "open-icon-button",
-        "audio-check",
-        "graphics-check",
-        "game-check",
-        "network-check",
-        "utility-check",
-        "office-check",
-        "settings-check",
-        "custom-categories",
-    });
-
-    ConnectSignals();
-}
-
-void Application::ConnectSignals()
-{
-    auto ConnectWidget = [&](const char* name, const char* event, void(callback)(GtkWidget*, gpointer))
-    {
-        g_signal_connect(widgets.at(name), event, G_CALLBACK(callback), this);
-    };
-
-    ConnectWidget("open-exec-button",   "clicked", OpenExecutable);
-    ConnectWidget("create-button",      "clicked", CreateFile);
-    ConnectWidget("open-icon-button",   "clicked", OpenIcon);
-    ConnectWidget("open-file-button",   "clicked", OpenFile);
-    ConnectWidget("new-file-button",    "clicked", NewFile);
+    g_signal_connect(widgets.at("open-exec-button"),   "clicked", G_CALLBACK(OpenExecutable),   this);
+    g_signal_connect(widgets.at("create-button"),      "clicked", G_CALLBACK(CreateFile),       this);
+    g_signal_connect(widgets.at("open-icon-button"),   "clicked", G_CALLBACK(OpenIcon),         this);
+    g_signal_connect(widgets.at("open-file-button"),   "clicked", G_CALLBACK(OpenFile),         this);
+    g_signal_connect(widgets.at("new-file-button"),    "clicked", G_CALLBACK(NewFile),          this);
 }

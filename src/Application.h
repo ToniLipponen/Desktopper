@@ -19,10 +19,9 @@ public:
     std::string GetEditableText(const std::string& componentName);
     bool GetChecked(const std::string& componentName);
     void LoadEntry(const std::string& path);
+    void CreateWidgets();
 
     std::map<std::string, GtkWidget*> widgets;
-    void CreateWidgets();
-    void ConnectSignals();
 private:
     GtkApplication* m_app;
 };
