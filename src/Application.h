@@ -15,14 +15,12 @@ public:
     void Clear();
     std::vector<std::string> GetCategories();
     void SetEditableText(const std::string& componentName, const std::string& value);
-    void SetChecked(const std::string& compoentName, bool value);
+    void SetChecked(const std::string& componentName, bool value);
     std::string GetEditableText(const std::string& componentName);
     bool GetChecked(const std::string& componentName);
     void LoadEntry(const std::string& path);
 
-    friend void Activate(GtkApplication*, gpointer);
     std::map<std::string, GtkWidget*> widgets;
-private:
     void CreateWidgets();
     void ConnectSignals();
 private:

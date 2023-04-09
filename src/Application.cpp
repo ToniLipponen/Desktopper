@@ -3,7 +3,6 @@
 #include "Incbin.h"
 #include "EntryFile.h"
 #include <algorithm>
-#include <iostream>
 
 extern "C"{
     INCBIN(char, UI, "../app.ui");
@@ -109,15 +108,10 @@ void Application::LoadEntry(const std::string& path)
 
 void Application::CreateWidgets()
 {
-    auto iconTheme = gtk_icon_theme_get_for_display(gdk_display_get_default());
-    gtk_icon_theme_add_search_path(iconTheme, "../res");
-    gtk_window_set_default_icon_name("folders");
-
     GtkBuilder* builder = gtk_builder_new_from_string(gUIData, gUISize);
     //GtkBuilder* builder = gtk_builder_new_from_file("../app.ui");
     GObject* window = gtk_builder_get_object(builder, "MainWindow");
 
-    gtk_window_set_icon_name(GTK_WINDOW(window), "folders");
     gtk_window_set_title(GTK_WINDOW(window), "Desktopper");
     gtk_window_set_application(GTK_WINDOW(window), m_app);
     gtk_widget_set_visible(GTK_WIDGET(window), true);

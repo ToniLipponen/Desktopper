@@ -1,8 +1,7 @@
 #include "EntryFile.h"
 #include <fstream>
 #include <filesystem>
-#include <iostream>
-#include <gtk/gtk.h>
+#include <glib.h>
 
 EntryFile::EntryFile() = default;
 
