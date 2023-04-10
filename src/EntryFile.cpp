@@ -9,7 +9,7 @@ void EntryFile::Parse(const std::string& path)
 {
     if(!std::filesystem::exists(path))
     {
-        g_message("File '", path.c_str(), "' doesn't exist");
+        g_message("Desktop entry file doesn't exist");
     }
 
     bool hasHeader = false;
